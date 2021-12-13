@@ -103,11 +103,11 @@ public class Jabeja {
       // Calculate old value
       int dpp = getDegree(nodep, nodep.getColor());
       int dqq = getDegree(nodeq, nodeq.getColor());
-      int old = dpp + dqq;
+      double old = Math.pow(dpp, config.getAlpha()) + Math.pow(dqq, config.getAlpha());
       // Calculate new value
       int dpq = getDegree(nodep, nodeq.getColor());
       int dqp = getDegree(nodeq, nodep.getColor());
-      int newv = dpq + dqp;
+      double newv = Math.pow(dpq, config.getAlpha()) + Math.pow(dqp, config.getAlpha());
 
       if (newv * T > old && newv > highestBenefit) {
         bestPartner = nodeq;
