@@ -54,6 +54,12 @@ public class Jabeja {
       T -= config.getDelta();
     if (T < 1)
       T = 1;
+
+    // annealing method 2
+//      if (T > 1)
+//      T *= 0.9;
+//    if (T < 1)
+//      T = 1;
   }
 
   /**
