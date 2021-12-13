@@ -17,7 +17,7 @@ public class Jabeja {
   private final List<Integer> nodeIds;
   private int numberOfSwaps;
   private int round;
-  private float T;
+  private double T;
   private boolean resultFileCreated = false;
 
   //-------------------------------------------------------------------
@@ -50,16 +50,17 @@ public class Jabeja {
    */
   private void saCoolDown(){
     // TODO for second task
-    if (T > 1)
-      T -= config.getDelta();
-    if (T < 1)
-      T = 1;
-
-    // annealing method 2
-//      if (T > 1)
-//      T *= 0.9;
+//    if (T > 1)
+//      T -= config.getDelta();
 //    if (T < 1)
 //      T = 1;
+
+    // annealing method 2
+    double T_min = 0.00001;
+    if (T > T_min)
+      T *= 0.9;
+    if (T < T_min)
+      T = T_min;
   }
 
   /**
@@ -115,7 +116,16 @@ public class Jabeja {
       int dqp = getDegree(nodeq, nodep.getColor());
       double newv = Math.pow(dpq, config.getAlpha()) + Math.pow(dqp, config.getAlpha());
 
-      if (newv * T > old && newv > highestBenefit) {
+//      if (newv * T > old && newv > highestBenefit) {
+//        bestPartner = nodeq;
+//        highestBenefit = newv;
+//      }
+
+      // annealing method 2
+      if (newv > old && newv > highestBenefit) {
+        bestPartner = nodeq;
+        highestBenefit = newv;
+      } else if (newv < old && Math.pow(Math.E, (newv-old)/T) > Math.random()) {
         bestPartner = nodeq;
         highestBenefit = newv;
       }
